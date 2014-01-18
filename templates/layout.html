@@ -19,13 +19,7 @@
 
       <div class="intro-section lead">
         <p>One Hundred Hours is designed to help manage hundred hour projects. It was inspired by a <a href="http://www.karenx.com/blog/how-to-get-a-job-after-youve-been-rejected">post on Karen Cheng's blog</a>. To use One Hundred Hours, create a new project and start clocking time on it!</p>
-        <p class="text-danger">Warning: One Hundred Hours is in development and does not yet maintain projects between sessions!</p>
-      </div>
-
-      <div class=metanav>
-        {% if session.logged_in %}
-          <a href="{{ url_for('logout') }}">log out</a>
-        {% endif %}
+        <p class="text-danger">Warning: One Hundred Hours is in development and may have bugs!</p>
       </div>
 
       {% for message in get_flashed_messages() %}

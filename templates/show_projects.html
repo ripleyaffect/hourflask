@@ -1,8 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
+
+    <form action="{{ url_for('logout') }}">
+      <button class="btn btn-danger">Log Out</button>
+    </form>
+    <br>
     <div class="new-project-section">
         <h2>Create a new project</h2>
+        {% if error %}
+          <p class="error"><strong>Error:</strong> {{ error }}
+        {% endif %}
         <form action="{{ url_for('add_project') }}" method=post>
           <div class="form-group">
             <label for="new-project-name">Project Name</label>
@@ -14,15 +22,15 @@
           </div>
           <div class="form-group">
             <label for="new-project-time">Days to Complete Project</label>
-            <input class="form-control" id="new-project-time" type="number">
-            <span class="help-block">(X hours per day)</span>
+            <input class="form-control" id="new-project-time" type="number" name="time_limit">
+            <!-- <span class="help-block">(X hours per day)</span> -->
           </div>
           <button type="submit" class="btn btn-success create-button">Create</button>
         </form>
       </div>
   {% endif %}
   <div class="projects-section">
-    <h2>Projects (X)</h2>
+    <h2>Projects ({{ projects|length }})</h2>
     <div class="lead">
       Click on a project's progress bar to record time spent on it or delete it. <br>
       The green represents your progress towards 100 hours, the blue represents your time limit.
@@ -36,7 +44,7 @@
         <div class="progress-border">
           <div class="progress-containter btn btn-danger">
             <div class="progress-bar" style="width: {{project.completed_hours}}%;"></div>
-            <div class="time-bar" style="width:50%;"></div>
+            <div class="time-bar" style="width:{{ (3690 - project.start_time) / ((project.time_limit|float) * 24) }}%; "></div>
             <div class="percent-complete-text">{{ project.completed_hours }}% Complete</div>
           </div>
         </div>
@@ -50,7 +58,9 @@
             <input name="minutes" class="form-control" id="project-minutes" type="number">
           </div>
           <button action="{{ url_for('add_time') }}" class="btn btn-primary" type="submit">Add Time</button>
-          <button class="btn btn-danger" type="submit">Delete Project</button>
+          <form action="{{ url_for('destroy_project') }}" method=destroy>
+            <button class="btn btn-danger" type="submit">Delete Project</button>
+          </form>
         </div>
       </div>
     {% endfor %}
