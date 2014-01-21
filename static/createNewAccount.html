@@ -1,0 +1,20 @@
+<div>
+	<div>
+		<h2>Create an Account</h2>
+		<form ng-submit="create()">
+			<div class="form-group">
+				<input type="text" placeholder="username" ng-model="user.username" />
+			</div>
+			<div class="form-group">
+				<input type="password" placeholder="password" ng-model="user.password" />
+			</div>
+			<div class="form-group">
+				<input type="password" placeholder="re-enter password" ng-model="user.password2" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</form>
+		{{ session.user_id }}
+	</div>
+</div>

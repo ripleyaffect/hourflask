@@ -4,3 +4,7 @@ venv/
 # Ignore Mac files
 .DS_Store
 .DS_Store?
+
+# Ignore .pyc and temp files
+*.pyc
+*~

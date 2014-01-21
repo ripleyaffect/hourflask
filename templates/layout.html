@@ -1,39 +1,17 @@
-<!doctype html>
 <html>
-
-<head>
-  <title>Hourflask</title>
-  <meta charset="utf-8">
-  <script src="assets/javascript/user1.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-  <div class="text-center" ng-controller="UserController as user">
-
-      <div class="title-section">
-        <h1 class="header-no-bottom">One Hundred Hours</h1>
-        <h1 class="header-description"><small>Manage your projects, achieve anything</small></h1>
-      </div>
-
-      <div class="intro-section lead">
-        <p>One Hundred Hours is designed to help manage hundred hour projects. It was inspired by a <a href="http://www.karenx.com/blog/how-to-get-a-job-after-youve-been-rejected">post on Karen Cheng's blog</a>. To use One Hundred Hours, create a new project and start clocking time on it!</p>
-        <p class="text-danger">Warning: One Hundred Hours is in development and may have bugs!</p>
-      </div>
-
-      {% for message in get_flashed_messages() %}
-        <div class=flash>{{ message }}</div>
-      {% endfor %}
-      {% block body %}{% endblock %}
-
-      <footer class="footer-section">
-        This page © Thomas Peterson
-        <ul class="social">
-          <li><a href="http://www.twitter.com/ripleyaffect"><img src="https://g.twimg.com/Twitter_logo_blue.png"></img></a></li>
-          <li><a href="http://www.linkedin.com/profile/view?id=178184513"><img src="https://dlc1-s.licdn.com/sites/default/files/InBug-60px-TM.png"></img></a></li>
-          <li><a href="http://www.github.com/ripleyaffect"><img src="https://github.global.ssl.fastly.net/images/modules/logos_page/GitHub-Mark.png"></img></a></li>
-        </ul>
-      </footer>
-  </div>
-</body>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js">
+    </script>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lustria|Yeseva+One|The+Girl+Next+Door|Fondamento|Zeyada' rel='stylesheet' type='text/css'>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <link href="/static/style.css" rel="stylesheet">
+    <title>HourFlask</title>
+  </head>
+  <body class="text-center">
+  {% block content %}
+  {% endblock content %}
+  </body>
+</html>

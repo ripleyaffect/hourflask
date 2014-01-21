@@ -1,3 +1,43 @@
+body {
+	background-color: #fff;
+}
+
+div#title	{
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	height: 70px;
+	background-color: #56b05c;
+	border-radius: 10px;
+}
+
+h1 {
+	padding-top: 10px;
+	font-size: 40pt;
+}
+
+a {
+	color: #FFF;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #333;
+}
+
+h1 {
+	/*font-family: 'Lustria', serif;*/
+	/*font-family: 'Yeseva One', cursive;*/
+	/*font-family: 'The Girl Next Door', cursive;*/
+	font-family: 'Fondamento', cursive;
+	/*font-family: 'Zeyada', cursive;*/
+}
+
+h2, h3 {
+	font-family: 'Lustria', serif;
+}
+
 .header-no-bottom {
 	margin-bottom: 0px;
 }
@@ -46,7 +86,7 @@ input {
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-	width: 50%;
+	width: 70%;
 	border-radius: 5px;
 	height: 35px;
 	transition: all 0.1s ease-in-out;
@@ -83,7 +123,7 @@ input {
 }
 
 .edit-project-form {
-	width: 50%;
+	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 	background: #ddd;
