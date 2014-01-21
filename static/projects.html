@@ -3,38 +3,45 @@
 	<h2>Projects</h2>
 	Hello user #{{ session.user_id }}!
 	<div class="new-project-section">
-		<h3>Create a Project</h3>
-		<form role="form">
-			<div class="form-group">
-				<label for="new-project-title">Project Title</label>
-				<input class="form-control" id="new-project-title" type="text" placeholder="Project name" ng-model="new_project.title">
-			</div>
-			<div class="form-group">
-				<label for="new-project-description">Project Description</label>
-				<textarea class="form-control" id="new-project-description" placeholder="Short project description" ng-model="new_project.description"></textarea>
-			</div>
-			<div class="form-group">
-				<label for="new-project-time">Days to Complete Project</label>
-				<input class="form-control" id="new-project-time" type="number" ng-model="new_project.time_limit">
-				<span class="help-block">({{(100 / new_project.time_limit).toFixed(2)}} hours per day)</span>
-			</div>
-			<button class="btn btn-success create-button" ng-click="createProject()">Create</button>
-		</form>
+		<button class="btn btn-success" ng-click="toggleCreate()">{{ new_project.create_button_text }}</button>
+		<div ng-show="new_project.show_create">
+			<h3>Create a Project</h3>
+			<form role="form">
+				<div class="form-group">
+					<label for="new-project-title">Project Title</label>
+					<input class="form-control" id="new-project-title" type="text" placeholder="Project name" ng-model="new_project.title">
+				</div>
+				<div class="form-group">
+					<label for="new-project-description">Project Description</label>
+					<textarea class="form-control" id="new-project-description" placeholder="Short project description" ng-model="new_project.description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="new-project-Hours">Length of Your Project in Hours</label>
+					<input class="form-control" id="new-project-hours" type="number" ng-model="new_project.total_hours">
+				</div>
+				<div class="form-group">
+					<label for="new-project-time">Days to Complete Project</label>
+					<input class="form-control" id="new-project-time" type="number" ng-model="new_project.time_limit">
+					<span class="help-block">({{(new_project.total_hours / new_project.time_limit).toFixed(2)}} hours per day)</span>
+				</div>
+				<button class="btn btn-success create-button" ng-click="createProject()">Create</button>
+			</form>
+		</div>
 	</div>
 	<h3>Your Projects ({{ projects.length }})</h3>
 	<div class="lead">
 		Click on a project's progress bar to record time spent on it or delete it. <br>
-		The green represents your progress towards 100 hours, the blue represents your time limit.
+		The green represents your progress towards completing your project, the blue represents your time limit.
 	</div>
 	<div class="project" ng-repeat="project in projects">
-		<h3 class="header-no-bottom">{{ project.title }}</h3>
+		<h3 class="header-no-bottom">{{ project.title }} : ({{ project.total_hours }} hours)</h3>
 		<div class="header-description">
 			<h3 class="header-description"><small>{{ project.description }}</small></h3>
 		</div>
 		<div class="progress-border">
 			<div class="progress-containter btn btn-danger" ng-click="showEdit(project)">
 				<div class="progress-bar" style="width: {{ project.completed_hours / project.total_hours * 100 }}%;"></div>
-				<div class="time-bar" style="width: {{ 50 }}%"></div>
+				<div class="time-bar" style={{percentTimePassed(project)}}></div>
 				<div class="percent-complete-text">{{ (project.completed_hours / project.total_hours * 100).toFixed(2) }}% Complete</div>
 			</div>
 		</div>

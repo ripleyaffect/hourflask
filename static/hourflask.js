@@ -106,20 +106,20 @@ app.controller('ProjectsController', [
 	function($scope, $http, $location, sessionData) {
 		$scope.session = sessionData;
 		$scope.projects = [];
-		$scope.new_project = { title: "", description: "", time_limit: 20, total_hours: 100};
+		$scope.new_project = { show_create: false, create_button_text: "Create a New Project", title: "", description: "", time_limit: 20, total_hours: 100};
 		$scope.add_time = { hours: 0.0, minutes: 0.0 };
 
-		if($scope.session.logged_in == false) { $location.path('/login') };
+		if($scope.session.logged_in == false || $scope.session.user_id == undefined ) { $location.path('/login') };
 
 		$scope.logout = function() {
 			$scope.session.logged_in = false;
-			$scope.session.user_id = null;
+			$scope.session.user_id = undefined;
 			$location.path('/login');
 		}
 
 		$scope.getProjects = function() {
 			$http.post('/getProjects', {
-				'user_id': $scope.session.user_id
+				user_id: $scope.session.user_id
 			})
 			.success(function(data, status, headers, config) {
 				if (data.success) {
@@ -133,10 +133,10 @@ app.controller('ProjectsController', [
 		};
 
 		$scope.createProject = function() {
-			var time = (new Date().getTime()) / (1000 * 60 * 60 * 24)
+			var time = (new Date().getTime()) / (1000 * 60 * 60)
 			if($scope.new_project.title.length < 1){
 				window.alert("Project name can't be blank");
-			} else if($scope.new_project.time_limit < 4.17) {
+			} else if($scope.new_project.time_limit * 24 < $scope.new_project.total_hours) {
 				window.alert("That's too short a time frame");
 			} else {
 				$http.post('/createProject', {
@@ -144,7 +144,7 @@ app.controller('ProjectsController', [
 					title: $scope.new_project.title,
 					description: $scope.new_project.description,
 					start_time: time,
-					total_hours: 100.0,
+					total_hours: $scope.new_project.total_hours,
 					completed_hours: 0.0,
 					time_limit: $scope.new_project.time_limit
 				})
@@ -163,6 +163,7 @@ app.controller('ProjectsController', [
 						$scope.new_project.title = "";
 						$scope.new_project.description = "";
 						$scope.new_project.time_limit = 20;
+						$scope.new_project.total_hours = 100;
 					} else {
 						window.alert('Project could not be added');
 					}
@@ -202,9 +203,8 @@ app.controller('ProjectsController', [
 				.success(function(data, status, headers, config) {
 					if (data.success) {
 						project.completed_hours = $scope.new_time;
-						if($scope.new_time / project.total_hours > 0.99) {
-							project.border_radius = " border-bottom-right-radius: 5px; border-top-right-radius: 5px;";
-						}
+						$scope.add_time.hours = 0;
+						$scope.add_time.minutes = 0;
 					} else {
 						window.alert('Time could not be updated');
 					}
@@ -214,6 +214,15 @@ app.controller('ProjectsController', [
 				});
 		};
 
+		$scope.toggleCreate = function() {
+			$scope.new_project.show_create = !$scope.new_project.show_create;
+			if($scope.new_project.show_create) {
+				$scope.new_project.create_button_text = 'Hide';
+			} else {
+				$scope.new_project.create_button_text = 'Create a New Project';
+			}
+		};
+
 		$scope.showEdit = function(project) {
 			$scope.projects.forEach(function(p) {
 				if(p != project) { p.visible = false; };
@@ -221,10 +230,17 @@ app.controller('ProjectsController', [
 			$scope.add_time.hours = 0.0;
 			$scope.add_time.minutes = 0.0;
 			project.visible = !project.visible;
-		}
+		};
 
-		if($scope.projects.length == 0) {
+		$scope.percentTimePassed = function(project) {
+			time = (new Date().getTime()) / (1000 * 60 * 60);
+			percent_passed = (time - project.start_time) / (project.time_limit * 24) * 100;
+			if(percent_passed > 100) { percent_passed = 100 };
+			return "width: " + percent_passed + "%;"; 
+		};
+
+		if($scope.session.logged_in == true && $scope.projects.length == 0) {
 			$scope.getProjects();
-		}
+		};
 	}
 ]);

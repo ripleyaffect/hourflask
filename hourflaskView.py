@@ -54,6 +54,7 @@ class DeleteProject(flask.views.MethodView):
 class GetProjects(flask.views.MethodView):
 	def post(self):
 		args = json.loads(request.data)
+		print args
 		projects = HourflaskModel.get_projects(args['user_id'])
 		return jsonify({
 			'success': True,
