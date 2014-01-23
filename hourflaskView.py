@@ -54,7 +54,6 @@ class DeleteProject(flask.views.MethodView):
 class GetProjects(flask.views.MethodView):
 	def post(self):
 		args = json.loads(request.data)
-		print args
 		projects = HourflaskModel.get_projects(args['user_id'])
 		return jsonify({
 			'success': True,
@@ -74,5 +73,10 @@ class AddTime(flask.views.MethodView):
 	def post(self):
 		args = json.loads(request.data)
 		HourflaskModel.add_time(args)
-		return jsonify( {'success': True } );
+		return jsonify( {'success': True } )
 
+class EditTitle(flask.views.MethodView):
+	def post(self):
+		args = json.loads(request.data)
+		HourflaskModel.edit_title(args)
+		return jsonify( {'success': True } )

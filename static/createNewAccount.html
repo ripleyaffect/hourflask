@@ -1,18 +1,21 @@
 <div>
-	<div>
+	<div class="panel">
 		<h2>Create an Account</h2>
-		<form ng-submit="create()">
+		<form role="form" ng-submit="create()">
 			<div class="form-group">
-				<input type="text" placeholder="username" ng-model="user.username" />
+				<label for="username">Username</label>
+				<input class="form-control" type="text" id="username" ng-model="user.username" />
 			</div>
 			<div class="form-group">
-				<input type="password" placeholder="password" ng-model="user.password" />
+				<label for="password">Password</label>
+				<input class="form-control" id="password" class="form-control" type="password" ng-model="user.password" />
 			</div>
 			<div class="form-group">
-				<input type="password" placeholder="re-enter password" ng-model="user.password2" />
+				<label for="password2">Re-type Password</label>
+				<input class="form-control" id="password2" class="form-control" type="password" ng-model="user.password2" />
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-success">Create Account</button>
 			</div>
 		</form>
 		{{ session.user_id }}

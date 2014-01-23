@@ -107,6 +107,7 @@ app.controller('ProjectsController', [
 		$scope.session = sessionData;
 		$scope.projects = [];
 		$scope.new_project = { show_create: false, create_button_text: "Create a New Project", title: "", description: "", time_limit: 20, total_hours: 100};
+		$scope.edit_title;
 		$scope.add_time = { hours: 0.0, minutes: 0.0 };
 
 		if($scope.session.logged_in == false || $scope.session.user_id == undefined ) { $location.path('/login') };
@@ -237,6 +238,21 @@ app.controller('ProjectsController', [
 			percent_passed = (time - project.start_time) / (project.time_limit * 24) * 100;
 			if(percent_passed > 100) { percent_passed = 100 };
 			return "width: " + percent_passed + "%;"; 
+		};
+
+		$scope.editTitle = function(project, edit_title) {
+			$http.post('/editTitle', {
+				id: project.id,
+				title: edit_title
+			})
+			.success(function(data, status, headers, config) {
+				if (data.success) {
+					project.title = edit_title;
+      		$scope.edit_title = "";
+				} else {
+					window.alert('Project title could not be edited');
+				}
+			})
 		};
 
 		if($scope.session.logged_in == true && $scope.projects.length == 0) {

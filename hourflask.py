@@ -1,6 +1,6 @@
 from flask import Flask
 
-from hourflaskView import HourflaskView, CreateAccount, Login, CreateProject, DeleteProject, GetProjects, AddTime
+from hourflaskView import HourflaskView, CreateAccount, Login, CreateProject, DeleteProject, GetProjects, AddTime, EditTitle
 
 # Create the app
 app = Flask(__name__)
@@ -13,6 +13,7 @@ app.add_url_rule('/createProject', view_func=CreateProject.as_view('create_new_p
 app.add_url_rule('/getProjects', view_func=GetProjects.as_view('get_projects'), methods=['POST'])
 app.add_url_rule('/addTime', view_func=AddTime.as_view('add_time'), methods=['POST'])
 app.add_url_rule('/deleteProject', view_func=DeleteProject.as_view('delete_project'), methods=['POST'])
+app.add_url_rule('/editTitle', view_func=EditTitle.as_view('edit_title'), methods=['POST'])
 # route for login
 # route for adding a project
 # route for adding time to a project

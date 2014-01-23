@@ -1,4 +1,5 @@
 import sqlite3
+from flask.ext.sqlalchemy import SQLAlchemy
 
 _conn = sqlite3.connect('/tmp/hourflask.db', check_same_thread=False)
 _conn.row_factory = sqlite3.Row
@@ -20,9 +21,8 @@ class HourflaskModel:
 	def create_account(cls, username, password):
 		_cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
 		_conn.commit()
-		print [r for r in _cursor.execute('SELECT last_insert_rowid()')]
-		rows = _cursor.execute('SELECT id FROM users where username=?', [username])
-		user_id = [r['id'] for r in rows]
+		user_id = [r['id'] for r in _cursor.execute('SELECT id FROM users where username=?', [username])]
+		print user_id
 		return user_id[0]
 
 	@classmethod
@@ -51,3 +51,9 @@ class HourflaskModel:
 	def add_time(cls, args):
 		_cursor.execute('UPDATE projects SET completed_hours=? WHERE id=?', (args['completed_hours'], args['id']))
 		_conn.commit()
+
+	@classmethod
+	def edit_title(cls, args):
+		_cursor.execute('UPDATE projects SET title=? WHERE id=?', (args['title'], args['id']))
+		_conn.commit()
+

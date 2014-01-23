@@ -2,20 +2,14 @@
 
 {% block content %}
 
-<div ng-app="HourflaskApp">
+<div class="wrapper" ng-app="HourflaskApp">
 	<div id="title">
-		<h1><a href="/#/login">HourFlask</a></h1>
+		<h1><a href="/#/login">HourFlask</a><small>Complete your projects, one drop at a time</small></h1>
 	</div>
   <div ng-view></div>
 </div>
 
-<footer class="footer-section">
-This page © Thomas Peterson
-	<ul class="social">
-    <li><a href="http://www.twitter.com/ripleyaffect"><img src="https://g.twimg.com/Twitter_logo_blue.png"></img></a></li>
-    <li><a href="http://www.linkedin.com/profile/view?id=178184513"><img src="https://dlc1-s.licdn.com/sites/default/files/InBug-60px-TM.png"></img></a></li>
-    <li><a href="http://www.github.com/ripleyaffect"><img src="https://github.global.ssl.fastly.net/images/modules/logos_page/GitHub-Mark.png"></img></a></li>
-  </ul>
+<footer class="footer">
 </footer>
 			
 <script src="/static/hourflask.js">
